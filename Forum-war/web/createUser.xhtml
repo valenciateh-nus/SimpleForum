@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+    <body>
+
+        <ui:composition template="./layout/default2.xhtml">
+
+            <ui:define name="title">
+                Create User Account
+            </ui:define>
+
+            <ui:define name="content">
+                <!-- Content Header (Page header) --> 
+                <div class="content-header">
+                    <div class="container-fluid"> <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1 class="m-0 text-dark">Create User Account</h1>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right"> <li class="breadcrumb-item active">
+                                        <a href="#{request.contextPath}">Home</a> </li>
+                                </ol> 
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.container-fluid --> 
+                </div>
+                <!-- /.content-header -->
+                <section class="content">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                #{customerManagedBean.selectedCustomer == null ? 'Create New Customer' : 'Edit Customer'}
+                            </h3>
+                        </div>
+                        <!-- /.card-header --> 
+                        <!-- form start -->
+                        <h:form id="form">
+                            <div class="card-body">
+                                <!-- name -->
+                                <div class="form-group">
+                                    <h:outputLabel for="username">Username</h:outputLabel>
+                                    <h:inputText
+                                        binding="#{username}"
+                                        id="username"
+                                        value="#{forumManagedBean.username}"
+                                        required="true"
+                                        requiredMessage="Username is required"
+                                        validator="#{forumManagedBean.checkUsername}"
+                                        validatorMessage="Username taken, please choose another."
+                                        class="form-control #{username.valid ? '' : 'is-invalid'}"
+                                        />
+                                    <h:message for="username" class="invalid-feedback" />
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="password">Password</h:outputLabel>
+                                    <h:inputSecret
+                                        binding="#{password}"
+                                        id="password"
+                                        value="#{forumManagedBean.password}"
+                                        required="true"
+                                        requiredMessage="Password is required"
+                                        class="form-control #{password.valid ? '' : 'is-invalid'}"
+                                        />
+                                    <h:message for="password" class="invalid-feedback" />
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="gender">Gender</h:outputLabel>
+                                    <div class="icheck-primary">
+                                        <input
+                                            type="radio"
+                                            jsf:id="genderF"
+                                            value="1"
+                                            class="minimal"
+                                            a:checked="#{(forumManagedBean.gender == 0 || forumManagedBean.gender == 1) ? 'checked' : null}"
+                                            a:name="#{genderItem.clientId}"
+                                            />
+                                        <label jsf:for="genderF">Female</label>
+                                    </div>
+                                    <div class="icheck-primary">
+                                        <input
+                                            type="radio"
+                                            jsf:id="genderM"
+                                            value="2"
+                                            class="minimal"
+                                            a:checked="#{(forumManagedBean.gender == 0 || forumManagedBean.gender == 1) ? 'checked' : null}"
+                                            a:name="#{genderItem.clientId}"
+                                            />
+                                        <label jsf:for="genderM">Male</label>
+                                        <h:inputHidden
+                                            binding="#{genderItem}"
+                                            value="#{forumManagedBean.gender}"
+                                            />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="inputDOB">
+                                        Date of Birth (dd/mm/yyyy)
+                                    </h:outputLabel>
+                                    <div class="input-group date"
+                                         id="dobpicker"
+                                         data-target-input="nearest"
+                                         >
+                                        <div class="input-group-prepend"
+                                             data-target="#dobpicker"
+                                             data-toggle="datetimepicker"
+                                             >
+                                            <div class="input-group-text">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                        </div>
+                                        <input type="submit" value="" />
+                                        <h:inputText binding="#{inputDOB}"
+                                                     id="inputDOB"
+                                                     value="#{forumManagedBean.dob}"
+                                                     required="true"
+                                                     requiredMessage="DOB is required"
+                                                     converterMessage="Format should be dd/mm/yyy"
+                                                     class="form-control datetimepicker-input #{inputDOB.valid ? '' : 'is-invalid'}"
+                                                     a:data-target="#dobpicker"
+                                                     a:data-toggle="datetimepicker"
+                                                     >
+                                            <f:convertDateTime pattern="dd/MM/yyy" />
+                                        </h:inputText>
+                                        <h:message for="inputDOB" class="invalid-feedback" />
+                                    </div>
+                                </div>
+                                Already have an account? <a href="index.xhtml">Click here to login.</a>
+                                <br />
+                                <br />
+
+                                <div class="card-footer">
+                                    <h:button
+                                        value="Cancel"
+                                        class="btn btn-default"
+                                        outcome="createUser.xhtml"
+                                        />
+                                    <h:commandButton
+                                        value="Submit"
+                                        class="btn btn-primary float-right"
+                                        actionListener="#{forumManagedBean.createUser}"
+                                        action="#{forumManagedBean.login}"
+                                        />
+                                </div>
+                            </div>
+                        </h:form>
+                    </div>
+                </section>
+
+            </ui:define>
+
+            <ui:define name="script">
+                <script>
+                    $("#dobpicker").datetimepicker({
+                        format: "DD/MM/YYYY",
+                    });
+                </script>
+            </ui:define>
+
+        </ui:composition>
+    </body>
+</html>

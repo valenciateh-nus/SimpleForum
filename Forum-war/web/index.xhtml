@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./layout/default2.xhtml">
+
+            <ui:define name="title">
+                Welcome to Simple Forum
+            </ui:define>
+            <ui:define name="content">
+                <!-- Content Header (Page header) --> <div class="content-header">
+                    <div class="container-fluid"> <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1 class="m-0 text-dark">Welcome to Simple Forum</h1>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right"> <li class="breadcrumb-item active">
+                                        <a href="#{request.contextPath}">Home</a> </li>
+                                </ol> </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.container-fluid --> </div>
+                <!-- /.content-header -->
+
+                <!-- Main content --> 
+                <section class="content">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h1 class="card-title">
+                                Login to Forum Account
+                            </h1>              
+                        </div>
+                        <h:form id="login">
+                            <h:messages globalOnly="true" showDetail="true" />
+                            <h:message for=":login:submit" />
+                            <div class="card-body">
+                                <!-- name -->
+                                <div class="form-group">
+                                    <h:outputLabel for="username">Name </h:outputLabel>
+                                    <br />
+                                    <h:inputText
+                                        binding="#{username}"
+                                        id="username"
+                                        value="#{forumManagedBean.username}"
+                                        required="true"
+                                        requiredMessage="Name is required"
+                                        class="form-control #{username.valid ? '' : 'is-invalid'}"
+                                        />
+                                    <h:message for="username" class="invalid-feedback" />
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="password">Password </h:outputLabel>
+                                    <br />
+                                    <h:inputSecret
+                                        binding="#{password}"
+                                        id="password"
+                                        value="#{forumManagedBean.password}"
+                                        required="true"
+                                        requiredMessage="Password is required"
+                                        class="form-control #{password.valid ? '' : 'is-invalid'}"
+                                        />
+                                    <h:message for="password" class="invalid-feedback" />
+                                </div>
+                                Don't have an account? <a href="createUser.xhtml">Click here to create account.</a>
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <h:button
+                                    value="Cancel"
+                                    class="btn btn-default"
+                                    outcome="index.xhtml"
+                                    />
+                                <h:commandButton
+                                    id="submit"
+                                    value="Submit"
+                                    class="btn btn-primary float-right"
+                                    actionListener="#{forumManagedBean.login}"
+                                    action="secret/forumPage.xhtml?faces-redirect=true"
+                                    />
+                            </div>
+
+                        </h:form>
+                    </div>
+                    <!-- /.card -->
+                </section>
+            </ui:define>
+
+            <ui:define name="script">
+                script
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>
